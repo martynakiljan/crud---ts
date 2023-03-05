@@ -4,16 +4,14 @@ import { Error, FormLabel } from "../utilis/styledcomponents";
 import { OutlinedInput } from "@mui/material";
 
 type DefaultProps = {
-  type: HTMLInputTypeAttribute;
+  type: string;
   text: string;
   id: string;
   name: string;
   value: string;
   formErrors: [];
-  onChange: () => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
-
-type HTMLInputTypeAttribute = "text";
 
 const FormInput = ({
   type,

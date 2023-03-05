@@ -12,17 +12,6 @@ type FormPropsType = {
   backdropFilter: string; 
 };
 
-const transitionStyles = {
- entering: { 
-  opacity: number,
-  backdropFilter: string
- },
- entered: { 
-  opacity: number,
-  backdropFilter: string; 
- }
-};
-
 const FadeModalDialog = ({ isOpen, setIsOpen, children }: FormPropsType) => {
   return (
     <>
@@ -41,7 +30,7 @@ const FadeModalDialog = ({ isOpen, setIsOpen, children }: FormPropsType) => {
                   ...{
                     entering: { opacity: 1, backdropFilter: "blur(8px)" },
                     entered: { opacity: 1, backdropFilter: "blur(8px)" },
-                  }[state as keyof typeof transitionStyle],
+                  }[state],
                 },
               },
             }}
@@ -58,7 +47,7 @@ const FadeModalDialog = ({ isOpen, setIsOpen, children }: FormPropsType) => {
                 ...{
                   entering: { opacity: 1 },
                   entered: { opacity: 1 },
-             }[state as keyof typeof transitionStyle],
+             }[state],
               }}
             >
               {children}

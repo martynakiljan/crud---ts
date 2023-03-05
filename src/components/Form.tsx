@@ -17,6 +17,13 @@ import { Button } from "../utilis/styledcomponents";
 import { inputs } from "../utilis/inputsArray";
 import updateUser from "../API/updateUser";
 
+export type FormErrorsType = {
+  firstName: string;
+  lastName: string;
+  userName: string;
+  email: string;
+};
+
 type DefaultFormDataType = {
   firstName: string;
   lastName: string;
@@ -25,7 +32,7 @@ type DefaultFormDataType = {
   id: string;
 };
 
-type UserDataType = {
+export type UserDataType = {
   fname: string;
   lname: string;
   username: string;
@@ -46,13 +53,17 @@ const defaultFormData = {
   id: "",
 };
 
-
+type DefaultResponseType = {
+  status: string;
+  message: string;
+  user: UserDataType;
+};
 
 export const Form = ({ setIsOpen, userData }: FormPropsType) => {
   const [formData, setFormData] =
     useState<DefaultFormDataType>(defaultFormData);
   const [createResponse, setCreateResponse] =
-    useState<DefaultResponseType>(null);
+    useState<DefaultResponseType | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [isCompleteFormState, setIsCompleteFormState] =
     useState<boolean>(false);
@@ -188,7 +199,7 @@ export const Form = ({ setIsOpen, userData }: FormPropsType) => {
           id={id}
           name={name}
           type={type}
-          value={formData[name]}
+          value={formData[name] as string}
           formErrors={formErrors[name]}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleEdit(name, event.target.value)

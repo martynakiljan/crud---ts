@@ -26,27 +26,36 @@ import fetchUserByID from "../API/fetchUserByID";
 
 const TableContent = () => {
   const { users } = useContext(Context);
-  
+
+  type DefaultFormDataType = {
+    fname: string;
+    lname: string;
+    username: string;
+    email: string;
+    id: number;
+    avatar: string;
+  };
+
   const [deleteUserResponse, setDeleteUserResponse] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const renderMedia = (avatar) => {
+  const renderMedia = (avatar: string) => {
     return <Avatar justify="center" src={avatar} />;
   };
 
-  const deleteUser = (id) => {
+  const deleteUser = (id: number) => {
     getResponseFromAPI(id);
   };
 
-  const getResponseFromAPI = async (id) => {
+  const getResponseFromAPI = async (id: number) => {
     const response = await deleteUsers(id);
     setDeleteUserResponse(response);
     setIsOpen(true);
   };
 
-  const fetchUserDetails = async (id) => {
+  const fetchUserDetails = async (id: number) => {
     if (id < 12) {
       setIsOpenAlert(true);
     } else {
@@ -58,7 +67,7 @@ const TableContent = () => {
     }
   };
 
-  const renderButtons = (id) => {
+  const renderButtons = (id: number) => {
     return (
       <div>
         <Button
@@ -94,22 +103,35 @@ const TableContent = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map(({ id, avatar, fname, lname, username, email }) => (
-              <TableRow
-                key={id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell component="th" scope="row" className="table-row-id">
-                  {id}
-                </TableCell>
-                <TableCell align="right">{renderMedia(avatar)}</TableCell>
-                <TableCell align="left">{fname}</TableCell>
-                <TableCell align="left">{lname}</TableCell>
-                <TableCell align="left">{username}</TableCell>
-                <TableCell align="left">{email}</TableCell>
-                <TableCell align="left">{renderButtons(id)}</TableCell>
-              </TableRow>
-            ))}
+            {users?.map(
+              ({
+                id,
+                avatar,
+                fname,
+                lname,
+                username,
+                email,
+              }: DefaultFormDataType) => (
+                <TableRow
+                  key={id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    className="table-row-id"
+                  >
+                    {id}
+                  </TableCell>
+                  <TableCell align="right">{renderMedia(avatar)}</TableCell>
+                  <TableCell align="left">{fname}</TableCell>
+                  <TableCell align="left">{lname}</TableCell>
+                  <TableCell align="left">{username}</TableCell>
+                  <TableCell align="left">{email}</TableCell>
+                  <TableCell align="left">{renderButtons(id)}</TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>

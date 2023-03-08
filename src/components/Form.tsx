@@ -1,8 +1,6 @@
 /** @format */
 
-import { CircularProgress, OutlinedInput } from "@mui/material";
-import FormControl from "@mui/joy/FormControl";
-import { FormLabel, Error } from "../utilis/styledcomponents";
+import { CircularProgress } from "@mui/material";
 import React, { useState, useContext, useEffect, useRef } from "react";
 import createNewUsers from "../API/createNewUsers";
 import FormInput from "./FormInput";
@@ -13,7 +11,7 @@ import {
   validateEmail,
   validateUserName,
 } from "../utilis/validateInput";
-import { Button } from "../utilis/styledcomponents";
+import { Button, Error } from "../utilis/styledcomponents";
 import { inputs } from "../utilis/inputsArray";
 import updateUser from "../API/updateUser";
 
@@ -38,11 +36,7 @@ export type UserDataType = {
   username: string;
   email: string;
   id: string;
-};
-
-type FormPropsType = {
-  setIsOpen: (open: boolean) => void;
-  userData: UserDataType;
+  avatar?: string;
 };
 
 const defaultFormData = {
@@ -53,13 +47,19 @@ const defaultFormData = {
   id: "",
 };
 
-type DefaultResponseType = {
+export type FormPropsModalType = {
+  isOpen: boolean;
+  setIsOpen: (open: boolean) => void;
+  userData?: UserDataType;
+};
+
+export type DefaultResponseType = {
   status: string;
   message: string;
   user: UserDataType;
 };
 
-export const Form = ({ setIsOpen, userData }: FormPropsType) => {
+export const Form = ({ setIsOpen, userData }: FormPropsModalType) => {
   const [formData, setFormData] =
     useState<DefaultFormDataType>(defaultFormData);
   const [createResponse, setCreateResponse] =
@@ -188,7 +188,8 @@ export const Form = ({ setIsOpen, userData }: FormPropsType) => {
     setIsOpen(false);
     reloadPage();
   };
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  // const inputRef = useRef<HTMLInputElement>(null);
 
   return !createResponse ? (
     <form>
@@ -199,31 +200,13 @@ export const Form = ({ setIsOpen, userData }: FormPropsType) => {
           id={id}
           name={name}
           type={type}
-          value={formData[name] as string}
-          formErrors={formErrors[name]}
+          value={formData[name as keyof DefaultFormDataType]}
+          formErrors={formErrors[name as keyof FormErrorsType]}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             handleEdit(name, event.target.value)
           }
         />
       ))}
-      <FormControl sx={{ width: "55ch" }}>
-        <FormLabel>
-          {" "}
-          Upload avatar
-          <input
-            type="file"
-            id="input"
-            name="avatar"
-            onChange={() =>
-              handleEdit(
-                "avatar",
-                URL.createObjectURL(inputRef.current.files[0])
-              )
-            }
-            ref={inputRef}
-          />
-        </FormLabel>
-      </FormControl>
       {loading ? (
         <CircularProgress color="secondary" />
       ) : (

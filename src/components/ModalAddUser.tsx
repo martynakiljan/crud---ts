@@ -4,14 +4,9 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import Form from "./Form";
 import Modal from "./Modal";
-import PropTypes from "prop-types";
+import { FormPropsModalType } from "./Form";
 
-type FormPropsType = {
-  isOpen: boolean;
-  setIsOpen: (open: boolean) => void;
-};
-
-const ModalAddUser = ({ isOpen, setIsOpen }: FormPropsType) => {
+const ModalAddUser = ({ isOpen, setIsOpen }: FormPropsModalType) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Typography

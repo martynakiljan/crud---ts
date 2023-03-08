@@ -3,8 +3,16 @@
 import React from "react";
 import { Typography, Button } from "@mui/material";
 import Modal from "./Modal";
+import { FormPropsModalType } from "./Form";
 
-const ModalRemoveUser = ({ isOpen, setIsOpen, response }) => {
+const DefaultResponseType = {
+  status: string,
+  message: string,
+};
+const ModalRemoveUser = (
+  { isOpen, setIsOpen }: FormPropsModalType,
+  { response }: DefaultResponseType
+) => {
   const { status, message } = response;
 
   return (

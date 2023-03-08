@@ -3,8 +3,9 @@
 import React from "react";
 import { Typography, Button } from "@mui/material";
 import Modal from "./Modal";
+import { FormPropsModalType } from "./Form";
 
-const ModalAlert = ({ isOpen, setIsOpen }) => {
+const ModalAlert = ({ isOpen, setIsOpen }: FormPropsModalType) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
       <Typography
